@@ -5,7 +5,7 @@ use rocket::Responder;
 
 #[derive(Responder)]
 #[response(status = 500,content_type = "json")]
-pub(crate) struct ErrorResponder{
+pub  struct ErrorResponder{
     pub message: String,
 }
 
