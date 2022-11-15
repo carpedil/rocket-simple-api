@@ -11,3 +11,4 @@ dotenv = "0.15.0"
 tokio-test="0.4.1"
 
 migration = {path="../migration"}
+entity = {path="../entity"}

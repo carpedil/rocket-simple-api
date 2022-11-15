@@ -20,6 +20,7 @@ impl MigrationTrait for Migration {
                             .primary_key(),
                     )
                     .col(ColumnDef::new(Bakery::Name).string().not_null())
+                    .col(ColumnDef::new(Bakery::ProfitMargin).string().not_null())
                     .to_owned(),
             )
             .await
@@ -38,4 +39,5 @@ pub  enum Bakery {
     Table,
     Id,
     Name,
+    ProfitMargin,
 }

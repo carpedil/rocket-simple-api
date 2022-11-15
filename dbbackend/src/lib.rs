@@ -17,6 +17,9 @@ pub async fn establish_connection() ->Result<DatabaseConnection,DbErr>{
 #[cfg(test)]
 mod tests {
     
+    use entity::bakery::{self};
+    use sea_orm::{ActiveValue, ActiveModelTrait};
+
     use super::establish_connection;
 
     // 使用宏来调用async函数
@@ -27,8 +30,18 @@ mod tests {
     }
 
     async fn get_db() -> Result<(),()>{
-        let _db =  establish_connection().await.unwrap();
-        println!("db: {:?}", _db);
+        let db =  establish_connection().await.unwrap();
+        println!("db: {:?}", db);
+
+        let bakery = bakery::ActiveModel{
+            name: ActiveValue::set(String::from("gouride")),
+            profit_margin: ActiveValue::set("0.5".to_owned()),
+            ..Default::default()
+        };
+
+        let bakery = bakery.insert(&db).await;
+        println!("bakery: {:?}",bakery);
+
         Ok(())
     }
 
