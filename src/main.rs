@@ -3,6 +3,11 @@ use rocket::{serde::json::Json, launch, routes, get, State};
 use sea_orm::{DatabaseConnection, EntityTrait};
 
 
+mod errorhandle;
+
+use errorhandle::ErrorResponder;
+
+
 #[get("/")]
 async fn index() -> &'static str {    
     "Hello bakeries !!"
@@ -10,18 +15,18 @@ async fn index() -> &'static str {
 
 
 #[get("/bakeries")]
-async fn bakeries(db: &State<DatabaseConnection>) -> Json<Vec<String>>{
+async fn bakeries(db: &State<DatabaseConnection>) -> Result<Json<Vec<String>>,ErrorResponder>{
     let db = db as &DatabaseConnection;
 
     let bakery_names = Bakery::find()
     .all(db)
     .await
-    .unwrap()
+    .map_err(|err|ErrorResponder{message:err.to_string()})?
     .into_iter()
     .map(|b|b.name)
     .collect::<Vec<String>>();
 
-    Json(bakery_names)
+    Ok(Json(bakery_names))
 }
 
 
