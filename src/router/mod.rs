@@ -20,7 +20,7 @@ pub async fn bakeries(db: &State<DatabaseConnection>) -> Result<Json<Vec<String>
     let bakery_names = Bakery::find()
     .all(db)
     .await
-    .map_err(|err|ErrorResponder{message:err.to_string()})?
+    .map_err(Into::<ErrorResponder>::into)?
     .into_iter()
     .map(|b|b.name)
     .collect::<Vec<String>>();
