@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 sea-orm = "0.9.1"
+async-graphql = "4.0.4"

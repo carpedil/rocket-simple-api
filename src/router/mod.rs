@@ -52,7 +52,7 @@ pub async fn new_bakery(
 
     let new_bakery = bakery::ActiveModel {
         name: ActiveValue::Set(name.to_owned()),
-        profit_margin: ActiveValue::Set(profit_margin.unwrap_or_default().to_string().to_string()),
+        profit_margin: ActiveValue::Set(profit_margin.unwrap_or_default().to_string()),
         ..Default::default()
     };
 
